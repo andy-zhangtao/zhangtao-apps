@@ -1,0 +1,288 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../components/Layout.astro';
+
+export async function getStaticPaths() {
+  const apps = await getCollection('apps');
+  return apps.map(app => ({
+    params: { slug: app.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+const app = await getEntry('apps', slug);
+
+if (!app) {
+  return Astro.redirect('/404');
+}
+
+const { Content } = await app.render();
+
+const categoryConfig = {
+  mobile: { label: '移动应用', color: 'from-green-400 to-emerald-500', icon: '📱', bg: 'bg-green-50' },
+  desktop: { label: '桌面应用', color: 'from-blue-400 to-cyan-500', icon: '💻', bg: 'bg-blue-50' },
+  web: { label: 'Web应用', color: 'from-purple-400 to-pink-500', icon: '🌐', bg: 'bg-purple-50' },
+  cli: { label: '命令行工具', color: 'from-gray-400 to-slate-500', icon: '⌨️', bg: 'bg-gray-50' }
+};
+
+const statusConfig = {
+  published: { label: '✨ 已发布', color: 'from-green-400 to-green-600', pulse: 'animate-pulse' },
+  beta: { label: '🚧 Beta版', color: 'from-yellow-400 to-orange-500', pulse: '' },
+  development: { label: '🔥 开发中', color: 'from-blue-400 to-indigo-600', pulse: 'animate-pulse' },
+  archived: { label: '📦 已归档', color: 'from-gray-400 to-gray-600', pulse: '' }
+};
+---
+
+<Layout title={`${app.data.title} - App Showcase`}>
+  <!-- 背景动画 -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-gradient-to-br from-violet-100 via-sky-50 to-cyan-100"></div>
+    <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+    <div class="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+    <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+  </div>
+
+  <main class="min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+      <!-- 返回按钮 - 现代玻璃态效果 -->
+      <div class="mb-8">
+        <a 
+          href="/" 
+          class="group inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl text-gray-700 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          <svg class="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+          </svg>
+          <span class="font-medium">返回首页</span>
+        </a>
+      </div>
+
+      <!-- 主要内容区域 -->
+      <div class="max-w-6xl mx-auto">
+        <!-- Hero区域 - 大胆现代设计 -->
+        <section class="relative mb-12 overflow-hidden">
+          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
+            <!-- 装饰性元素 -->
+            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-400/20 to-cyan-600/20 rounded-full blur-2xl"></div>
+            
+            <div class="relative grid md:grid-cols-3 gap-8 items-center">
+              <!-- 应用图标 - 现代3D效果 -->
+              <div class="md:col-span-1 flex justify-center md:justify-start">
+                <div class="relative group">
+                  {app.data.icon ? (
+                    <img 
+                      src={app.data.icon} 
+                      alt={`${app.data.title} icon`} 
+                      class="w-32 h-32 rounded-3xl shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
+                    />
+                  ) : (
+                    <div class={`w-32 h-32 bg-gradient-to-br ${categoryConfig[app.data.category].color} rounded-3xl flex items-center justify-center text-white text-5xl font-bold shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
+                      {app.data.title.charAt(0)}
+                    </div>
+                  )}
+                  <!-- 发光效果 -->
+                  <div class={`absolute inset-0 bg-gradient-to-br ${categoryConfig[app.data.category].color} rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 -z-10`}></div>
+                </div>
+              </div>
+
+              <!-- 应用信息 -->
+              <div class="md:col-span-2 text-center md:text-left">
+                <div class="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-6">
+                  <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent leading-tight">
+                    {app.data.title}
+                  </h1>
+                  {app.data.featured && (
+                    <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold rounded-2xl shadow-lg animate-pulse">
+                      ⭐ FEATURED
+                    </div>
+                  )}
+                </div>
+
+                <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed font-light">
+                  {app.data.description}
+                </p>
+
+                <!-- 状态和分类标签 - 现代胶囊设计 -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
+                  <div class={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${statusConfig[app.data.status].color} text-white font-bold rounded-2xl shadow-lg ${statusConfig[app.data.status].pulse}`}>
+                    {statusConfig[app.data.status].label}
+                  </div>
+                  <div class={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${categoryConfig[app.data.category].color} text-white font-semibold rounded-2xl shadow-lg`}>
+                    <span class="mr-2 text-lg">{categoryConfig[app.data.category].icon}</span>
+                    {categoryConfig[app.data.category].label}
+                  </div>
+                  <div class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl text-gray-700 font-medium">
+                    📅 {app.data.publishDate.toLocaleDateString('zh-CN')}
+                  </div>
+                </div>
+
+                <!-- CTA按钮组 - 现代玻璃态 -->
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                  {app.data.github && (
+                    <a 
+                      href={app.data.github} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-900 to-black text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    >
+                      <svg class="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                      </svg>
+                      查看源码
+                    </a>
+                  )}
+                  {app.data.website && app.data.website !== '' && (
+                    <a 
+                      href={app.data.website} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                    >
+                      <span class="mr-3 text-xl group-hover:scale-110 transition-transform">🌐</span>
+                      官方网站
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 技术栈展示 - 现代卡片网格 -->
+        <section class="mb-12">
+          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+              🔧 技术栈
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+              {app.data.tech.map((tech, index) => (
+                <div 
+                  class="group relative overflow-hidden bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-4 text-center hover:bg-white/30 hover:scale-105 transition-all duration-300 shadow-lg"
+                  style={`animation-delay: ${index * 100}ms`}
+                >
+                  <div class="text-sm font-semibold text-gray-800 group-hover:text-gray-900 transition-colors">
+                    {tech}
+                  </div>
+                  <!-- 悬浮发光效果 -->
+                  <div class="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-purple-400/0 to-pink-400/0 group-hover:from-blue-400/10 group-hover:via-purple-400/10 group-hover:to-pink-400/10 rounded-2xl transition-all duration-300"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <!-- 详细内容 - 现代阅读体验 -->
+        <section class="mb-12">
+          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
+            <div class="prose prose-lg max-w-none text-gray-800">
+              <Content />
+            </div>
+          </div>
+        </section>
+
+        <!-- 截图展示 - 现代画廊 -->
+        {app.data.screenshots && app.data.screenshots.length > 0 && (
+          <section class="mb-12">
+            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
+              <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+                📸 应用截图
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {app.data.screenshots.map((screenshot, index) => (
+                  <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
+                    <img 
+                      src={screenshot} 
+                      alt={`${app.data.title} 截图 ${index + 1}`}
+                      class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  /* 动画定义 */
+  @keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+
+  .animate-blob {
+    animation: blob 7s infinite;
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+  /* 现代化 prose 样式 */
+  .prose h1 {
+    @apply text-4xl font-black text-gray-900 mt-12 mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
+  }
+  
+  .prose h2 {
+    @apply text-3xl font-bold text-gray-900 mt-10 mb-5 relative;
+  }
+  
+  .prose h2::before {
+    content: '';
+    @apply absolute -left-4 top-1/2 w-2 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full transform -translate-y-1/2;
+  }
+  
+  .prose h3 {
+    @apply text-2xl font-bold text-gray-800 mt-8 mb-4;
+  }
+  
+  .prose p {
+    @apply text-gray-700 leading-8 mb-6 text-lg;
+  }
+  
+  .prose ul {
+    @apply space-y-3 mb-8;
+  }
+  
+  .prose li {
+    @apply text-gray-700 leading-7 pl-2 relative;
+  }
+  
+  .prose li::before {
+    content: '→';
+    @apply absolute -left-6 text-blue-500 font-bold;
+  }
+  
+  .prose strong {
+    @apply font-bold text-gray-900 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  }
+  
+  .prose code {
+    @apply bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-1 rounded-lg text-sm font-mono text-gray-800 border border-gray-300;
+  }
+
+  /* 玻璃态效果增强 */
+  .backdrop-blur-xl {
+    backdrop-filter: blur(20px);
+  }
+
+  /* 悬浮动画 */
+  .hover\:scale-105:hover {
+    transform: scale(1.05);
+  }
+
+  .hover\:scale-110:hover {
+    transform: scale(1.1);
+  }
+</style>

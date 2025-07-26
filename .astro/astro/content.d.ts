@@ -140,19 +140,23 @@ declare module 'astro:content' {
 	>;
 
 	type ContentEntryMap = {
-		
+		"apps": {
+"jsonify.md": {
+	id: "jsonify.md";
+  slug: "jsonify";
+  body: string;
+  collection: "apps";
+  data: InferEntrySchema<"apps">
+} & { render(): Render[".md"] };
+};
+
 	};
 
 	type DataEntryMap = {
-		"apps": Record<string, {
-  id: string;
-  collection: "apps";
-  data: any;
-}>;
-
+		
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = never;
+	export type ContentConfig = typeof import("../../src/content/config.js");
 }

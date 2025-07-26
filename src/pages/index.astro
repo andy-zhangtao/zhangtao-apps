@@ -1,8 +1,14 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../components/Layout.astro';
+import AppCard from '../components/AppCard.astro';
+
+const apps = await getCollection('apps');
+const featuredApps = apps.filter(app => app.data.featured);
+const regularApps = apps.filter(app => !app.data.featured);
 ---
 
-<Layout title="App Showcase">
+<Layout title="App Showcase - 张涛的应用展示">
   <main class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
     <div class="container mx-auto px-4 py-16">
       <header class="text-center mb-16">
@@ -12,24 +18,77 @@ import Layout from '../components/Layout.astro';
         <p class="text-xl text-gray-600 max-w-2xl mx-auto">
           展示我开发的移动端和桌面应用，使用现代技术栈构建的高质量应用程序
         </p>
+        <div class="mt-8 flex justify-center space-x-4">
+          <div class="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm">
+            <span class="w-3 h-3 bg-green-500 rounded-full"></span>
+            <span class="text-sm text-gray-600">{apps.filter(app => app.data.status === 'published').length} 个已发布</span>
+          </div>
+          <div class="flex items-center space-x-2 bg-white px-4 py-2 rounded-full shadow-sm">
+            <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+            <span class="text-sm text-gray-600">{apps.filter(app => app.data.status === 'development').length} 个开发中</span>
+          </div>
+        </div>
       </header>
       
-      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-          <h3 class="text-xl font-semibold mb-4">示例应用 1</h3>
-          <p class="text-gray-600">这里将展示应用的描述和功能介绍</p>
+      {featuredApps.length > 0 && (
+        <section class="mb-16">
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+            🌟 精选应用
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {featuredApps.map((app) => (
+              <AppCard
+                title={app.data.title}
+                description={app.data.description}
+                category={app.data.category}
+                tech={app.data.tech}
+                status={app.data.status}
+                featured={app.data.featured}
+                github={app.data.github}
+                website={app.data.website}
+                appStore={app.data.appStore}
+                playStore={app.data.playStore}
+                icon={app.data.icon}
+                slug={app.slug}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      
+      {regularApps.length > 0 && (
+        <section>
+          <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
+            📱 所有应用
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {regularApps.map((app) => (
+              <AppCard
+                title={app.data.title}
+                description={app.data.description}
+                category={app.data.category}
+                tech={app.data.tech}
+                status={app.data.status}
+                featured={app.data.featured}
+                github={app.data.github}
+                website={app.data.website}
+                appStore={app.data.appStore}
+                playStore={app.data.playStore}
+                icon={app.data.icon}
+                slug={app.slug}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      
+      {apps.length === 0 && (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">🚀</div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">敬请期待</h3>
+          <p class="text-gray-600">更多精彩应用正在开发中...</p>
         </div>
-        
-        <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-          <h3 class="text-xl font-semibold mb-4">示例应用 2</h3>
-          <p class="text-gray-600">这里将展示应用的描述和功能介绍</p>
-        </div>
-        
-        <div class="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow">
-          <h3 class="text-xl font-semibold mb-4">示例应用 3</h3>
-          <p class="text-gray-600">这里将展示应用的描述和功能介绍</p>
-        </div>
-      </section>
+      )}
     </div>
   </main>
 </Layout>
