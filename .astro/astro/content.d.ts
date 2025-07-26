@@ -141,6 +141,13 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"apps": {
+"ffmpeg-examples.md": {
+	id: "ffmpeg-examples.md";
+  slug: "ffmpeg-examples";
+  body: string;
+  collection: "apps";
+  data: InferEntrySchema<"apps">
+} & { render(): Render[".md"] };
 "jsonify.md": {
 	id: "jsonify.md";
   slug: "jsonify";

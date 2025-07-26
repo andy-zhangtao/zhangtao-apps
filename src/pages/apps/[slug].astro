@@ -175,7 +175,7 @@ const statusConfig = {
         <!-- 详细内容 - 现代阅读体验 -->
         <section class="mb-12">
           <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <div class="prose prose-lg max-w-none text-gray-800">
+            <div class="prose prose-lg max-w-4xl mx-auto text-gray-800">
               <Content />
             </div>
           </div>
@@ -229,13 +229,15 @@ const statusConfig = {
     animation-delay: 4s;
   }
 
-  /* 现代化 prose 样式 */
+  /* 现代化 prose 样式 - 优化排版 */
   .prose h1 {
-    @apply text-4xl font-black text-gray-900 mt-12 mb-6 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
+    @apply text-4xl font-black text-gray-900 mt-16 mb-8 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
+    line-height: 1.2;
   }
   
   .prose h2 {
-    @apply text-3xl font-bold text-gray-900 mt-10 mb-5 relative;
+    @apply text-3xl font-bold text-gray-900 mt-14 mb-6 relative pb-2;
+    border-bottom: 2px solid #e5e7eb;
   }
   
   .prose h2::before {
@@ -244,24 +246,28 @@ const statusConfig = {
   }
   
   .prose h3 {
-    @apply text-2xl font-bold text-gray-800 mt-8 mb-4;
+    @apply text-2xl font-bold text-gray-800 mt-10 mb-5;
   }
   
   .prose p {
     @apply text-gray-700 leading-8 mb-6 text-lg;
+    text-align: justify;
+    text-justify: inter-character;
   }
   
   .prose ul {
-    @apply space-y-3 mb-8;
+    @apply space-y-4 mb-10 pl-4;
   }
   
   .prose li {
-    @apply text-gray-700 leading-7 pl-2 relative;
+    @apply text-gray-700 leading-8 pl-4 relative text-lg;
+    margin-bottom: 0.75rem;
   }
   
   .prose li::before {
-    content: '→';
-    @apply absolute -left-6 text-blue-500 font-bold;
+    content: '▶';
+    @apply absolute left-0 text-blue-500 font-bold text-sm;
+    top: 0.1rem;
   }
   
   .prose strong {
@@ -269,7 +275,39 @@ const statusConfig = {
   }
   
   .prose code {
-    @apply bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-1 rounded-lg text-sm font-mono text-gray-800 border border-gray-300;
+    @apply bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-1.5 rounded-lg text-sm font-mono text-gray-800 border border-gray-300;
+  }
+
+  /* 段落间距优化 */
+  .prose > * + * {
+    margin-top: 1.5rem;
+  }
+
+  .prose h1 + * {
+    margin-top: 2rem;
+  }
+
+  .prose h2 + * {
+    margin-top: 1.5rem;
+  }
+
+  .prose h3 + * {
+    margin-top: 1rem;
+  }
+
+  /* 列表样式优化 */
+  .prose ul ul {
+    @apply mt-4 pl-6;
+  }
+
+  .prose ul ul li::before {
+    content: '→';
+    @apply text-gray-400;
+  }
+
+  /* 文字块分隔 */
+  .prose > section {
+    @apply mb-12 p-6 bg-white/5 rounded-2xl border border-white/10;
   }
 
   /* 玻璃态效果增强 */
