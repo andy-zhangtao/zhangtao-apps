@@ -229,15 +229,23 @@ const statusConfig = {
     animation-delay: 4s;
   }
 
-  /* 现代化 prose 样式 - 优化排版 */
+  /* 现代化 prose 样式 - 优化排版和间距 */
   .prose h1 {
-    @apply text-4xl font-black text-gray-900 mt-16 mb-8 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
+    @apply text-4xl font-black text-gray-900 bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent;
     line-height: 1.2;
+    margin-top: 3rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid #f3f4f6;
   }
   
   .prose h2 {
-    @apply text-3xl font-bold text-gray-900 mt-14 mb-6 relative pb-2;
+    @apply text-3xl font-bold text-gray-900 relative;
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    padding-bottom: 0.75rem;
     border-bottom: 2px solid #e5e7eb;
+    line-height: 1.3;
   }
   
   .prose h2::before {
@@ -246,22 +254,35 @@ const statusConfig = {
   }
   
   .prose h3 {
-    @apply text-2xl font-bold text-gray-800 mt-10 mb-5;
+    @apply text-2xl font-bold text-gray-800;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
   }
   
   .prose p {
-    @apply text-gray-700 leading-8 mb-6 text-lg;
+    @apply text-gray-700 text-lg;
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
     text-align: justify;
     text-justify: inter-character;
   }
   
+  .prose p + p {
+    margin-top: 1.25rem;
+  }
+  
   .prose ul {
-    @apply space-y-4 mb-10 pl-4;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
   }
   
   .prose li {
-    @apply text-gray-700 leading-8 pl-4 relative text-lg;
-    margin-bottom: 0.75rem;
+    @apply text-gray-700 relative text-lg;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
   }
   
   .prose li::before {
@@ -275,29 +296,31 @@ const statusConfig = {
   }
   
   .prose code {
-    @apply bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-1.5 rounded-lg text-sm font-mono text-gray-800 border border-gray-300;
+    @apply bg-gradient-to-r from-gray-100 to-gray-200 px-3 py-2 rounded-lg text-sm font-mono text-gray-800 border border-gray-300;
   }
 
-  /* 段落间距优化 */
-  .prose > * + * {
+  /* 标题与内容间距优化 */
+  .prose h1 + p,
+  .prose h1 + ul {
     margin-top: 1.5rem;
   }
 
-  .prose h1 + * {
-    margin-top: 2rem;
+  .prose h2 + p,
+  .prose h2 + ul,
+  .prose h2 + h3 {
+    margin-top: 1.25rem;
   }
 
-  .prose h2 + * {
-    margin-top: 1.5rem;
-  }
-
-  .prose h3 + * {
+  .prose h3 + p,
+  .prose h3 + ul {
     margin-top: 1rem;
   }
 
   /* 列表样式优化 */
   .prose ul ul {
-    @apply mt-4 pl-6;
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+    padding-left: 1.5rem;
   }
 
   .prose ul ul li::before {
@@ -305,9 +328,30 @@ const statusConfig = {
     @apply text-gray-400;
   }
 
-  /* 文字块分隔 */
+  /* 段落组合间距 */
+  .prose > * + h1 {
+    margin-top: 4rem;
+  }
+
+  .prose > * + h2 {
+    margin-top: 3.5rem;
+  }
+
+  .prose > * + h3 {
+    margin-top: 2.5rem;
+  }
+
+  /* 特殊区块样式 */
+  .prose blockquote {
+    @apply border-l-4 border-blue-500 pl-6 py-4 my-8 bg-blue-50/50 rounded-r-lg;
+    font-style: italic;
+  }
+
+  /* 文字块呼吸感 */
+  .prose > div,
   .prose > section {
-    @apply mb-12 p-6 bg-white/5 rounded-2xl border border-white/10;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
   }
 
   /* 玻璃态效果增强 */
