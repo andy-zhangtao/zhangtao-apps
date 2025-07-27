@@ -230,70 +230,95 @@ const statusConfig = {
   }
 
   /* 现代化 prose 样式 - 极致舒适的阅读体验 */
-  .prose h1 {
-    @apply text-4xl font-black bg-gradient-to-r from-gray-900 via-blue-800 to-gray-900 bg-clip-text text-transparent;
-    line-height: 1.2;
-    margin-top: 0;
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 3px solid #e5e7eb;
-    position: relative;
+  .prose h1,
+  .prose h1[data-astro-cid-7da3lww3] {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+    font-weight: 900 !important;
+    background: linear-gradient(to right, #111827, #1e40af, #111827) !important;
+    background-clip: text !important;
+    -webkit-background-clip: text !important;
+    color: transparent !important;
+    margin-top: 0 !important;
+    margin-bottom: 3rem !important;
+    padding-bottom: 1.5rem !important;
+    border-bottom: 3px solid #e5e7eb !important;
+    position: relative !important;
   }
 
-  .prose h1::after {
-    content: '';
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 60px;
-    height: 3px;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-    border-radius: 2px;
+  .prose h1::after,
+  .prose h1[data-astro-cid-7da3lww3]::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -3px !important;
+    left: 0 !important;
+    width: 60px !important;
+    height: 3px !important;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
+    border-radius: 2px !important;
   }
   
-  .prose h2 {
-    @apply text-3xl font-bold text-gray-900 relative;
-    margin-top: 5rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 2px solid #f3f4f6;
-    line-height: 1.3;
+  .prose h2,
+  .prose h2[data-astro-cid-7da3lww3] {
+    font-size: 1.875rem !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    position: relative !important;
+    margin-top: 5rem !important;
+    margin-bottom: 2.5rem !important;
+    padding-bottom: 1rem !important;
+    border-bottom: 2px solid #f3f4f6 !important;
   }
   
-  .prose h2::before {
-    content: '';
-    @apply absolute -left-6 top-1/2 w-3 h-10 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full transform -translate-y-1/2;
+  .prose h2::before,
+  .prose h2[data-astro-cid-7da3lww3]::before {
+    content: '' !important;
+    position: absolute !important;
+    left: -1.5rem !important;
+    top: 50% !important;
+    width: 0.75rem !important;
+    height: 2.5rem !important;
+    background: linear-gradient(to bottom, #3b82f6, #9333ea) !important;
+    border-radius: 9999px !important;
+    transform: translateY(-50%) !important;
   }
 
-  .prose h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-    border-radius: 1px;
+  .prose h2::after,
+  .prose h2[data-astro-cid-7da3lww3]::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -2px !important;
+    left: 0 !important;
+    width: 40px !important;
+    height: 2px !important;
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
+    border-radius: 1px !important;
   }
   
-  .prose h3 {
-    @apply text-2xl font-bold text-gray-800 relative;
-    margin-top: 3rem;
-    margin-bottom: 1.8rem;
-    line-height: 1.4;
-    padding-left: 1rem;
+  .prose h3,
+  .prose h3[data-astro-cid-7da3lww3] {
+    font-size: 1.5rem !important;
+    line-height: 1.4 !important;
+    font-weight: 700 !important;
+    color: #1f2937 !important;
+    position: relative !important;
+    margin-top: 3rem !important;
+    margin-bottom: 1.8rem !important;
+    padding-left: 1rem !important;
   }
 
-  .prose h3::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    width: 4px;
-    height: 24px;
-    background: linear-gradient(180deg, #60a5fa, #c084fc);
-    border-radius: 2px;
-    transform: translateY(-50%);
+  .prose h3::before,
+  .prose h3[data-astro-cid-7da3lww3]::before {
+    content: '' !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    width: 4px !important;
+    height: 24px !important;
+    background: linear-gradient(180deg, #60a5fa, #c084fc) !important;
+    border-radius: 2px !important;
+    transform: translateY(-50%) !important;
   }
   
   .prose p {
