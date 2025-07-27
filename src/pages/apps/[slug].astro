@@ -19,497 +19,386 @@ if (!app) {
 const { Content } = await app.render();
 
 const categoryConfig = {
-  mobile: { label: '移动应用', color: 'from-green-400 to-emerald-500', icon: '📱', bg: 'bg-green-50' },
-  desktop: { label: '桌面应用', color: 'from-blue-400 to-cyan-500', icon: '💻', bg: 'bg-blue-50' },
-  web: { label: 'Web应用', color: 'from-purple-400 to-pink-500', icon: '🌐', bg: 'bg-purple-50' },
-  cli: { label: '命令行工具', color: 'from-gray-400 to-slate-500', icon: '⌨️', bg: 'bg-gray-50' }
+  mobile: { label: '移动应用', color: 'from-emerald-500 via-teal-500 to-cyan-500', icon: '📱', accent: 'emerald' },
+  desktop: { label: '桌面应用', color: 'from-blue-500 via-indigo-500 to-purple-500', icon: '💻', accent: 'blue' },
+  web: { label: 'Web应用', color: 'from-pink-500 via-rose-500 to-orange-500', icon: '🌐', accent: 'pink' },
+  cli: { label: '命令行工具', color: 'from-slate-500 via-gray-500 to-zinc-500', icon: '⌨️', accent: 'slate' }
 };
 
 const statusConfig = {
-  published: { label: '✨ 已发布', color: 'from-green-400 to-green-600', pulse: 'animate-pulse' },
-  beta: { label: '🚧 Beta版', color: 'from-yellow-400 to-orange-500', pulse: '' },
-  development: { label: '🔥 开发中', color: 'from-blue-400 to-indigo-600', pulse: 'animate-pulse' },
-  archived: { label: '📦 已归档', color: 'from-gray-400 to-gray-600', pulse: '' }
+  published: { label: '已发布', color: 'from-green-500 to-emerald-600', icon: '✨' },
+  beta: { label: 'Beta版', color: 'from-amber-500 to-orange-600', icon: '🚧' },
+  development: { label: '开发中', color: 'from-blue-500 to-indigo-600', icon: '🔥' },
+  archived: { label: '已归档', color: 'from-gray-500 to-slate-600', icon: '📦' }
 };
 ---
 
 <Layout title={`${app.data.title} - App Showcase`}>
-  <!-- 背景动画 -->
-  <div class="fixed inset-0 -z-10">
-    <div class="absolute inset-0 bg-gradient-to-br from-violet-100 via-sky-50 to-cyan-100"></div>
-    <div class="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-    <div class="absolute top-0 -right-4 w-72 h-72 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-    <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+  <!-- 艺术化背景 - Inspired by Apple & Figma -->
+  <div class="fixed inset-0 -z-10 overflow-hidden">
+    <!-- 基础渐变背景 -->
+    <div class="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-blue-50"></div>
+    
+    <!-- 动态网格 -->
+    <div class="absolute inset-0" style="background-image: radial-gradient(circle at 1px 1px, rgba(59, 130, 246, 0.08) 1px, transparent 0); background-size: 50px 50px;"></div>
+    
+    <!-- 浮动几何元素 -->
+    <div class="absolute top-20 left-20 w-32 h-32 bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-2xl animate-float"></div>
+    <div class="absolute top-40 right-32 w-24 h-24 bg-gradient-to-br from-pink-400/20 to-orange-400/20 rounded-full blur-xl animate-float-delayed"></div>
+    <div class="absolute bottom-32 left-1/3 w-40 h-40 bg-gradient-to-br from-green-400/15 to-teal-400/15 rounded-full blur-3xl animate-float-slow"></div>
+    
+    <!-- 光线效果 -->
+    <div class="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-200/30 to-transparent"></div>
+    <div class="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-purple-200/20 to-transparent"></div>
   </div>
 
-  <main class="min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-      <!-- 返回按钮 - 现代玻璃态效果 -->
-      <div class="mb-8">
-        <a 
-          href="/" 
-          class="group inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl text-gray-700 hover:bg-white/30 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
-        >
-          <svg class="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-          </svg>
-          <span class="font-medium">返回首页</span>
-        </a>
-      </div>
-
-      <!-- 主要内容区域 -->
-      <div class="max-w-6xl mx-auto">
-        <!-- Hero区域 - 大胆现代设计 -->
-        <section class="relative mb-12 overflow-hidden">
-          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <!-- 装饰性元素 -->
-            <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-            <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-400/20 to-cyan-600/20 rounded-full blur-2xl"></div>
-            
-            <div class="relative grid md:grid-cols-3 gap-8 items-center">
-              <!-- 应用图标 - 现代3D效果 -->
-              <div class="md:col-span-1 flex justify-center md:justify-start">
-                <div class="relative group">
-                  {app.data.icon ? (
-                    <img 
-                      src={app.data.icon} 
-                      alt={`${app.data.title} icon`} 
-                      class="w-32 h-32 rounded-3xl shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500"
-                    />
-                  ) : (
-                    <div class={`w-32 h-32 bg-gradient-to-br ${categoryConfig[app.data.category].color} rounded-3xl flex items-center justify-center text-white text-5xl font-bold shadow-2xl transform group-hover:scale-110 group-hover:rotate-3 transition-all duration-500`}>
-                      {app.data.title.charAt(0)}
-                    </div>
-                  )}
-                  <!-- 发光效果 -->
-                  <div class={`absolute inset-0 bg-gradient-to-br ${categoryConfig[app.data.category].color} rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500 -z-10`}></div>
-                </div>
-              </div>
-
-              <!-- 应用信息 -->
-              <div class="md:col-span-2 text-center md:text-left">
-                <div class="flex flex-wrap justify-center md:justify-start items-center gap-4 mb-6">
-                  <h1 class="text-5xl md:text-6xl font-black bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 bg-clip-text text-transparent leading-tight">
-                    {app.data.title}
-                  </h1>
-                  {app.data.featured && (
-                    <div class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold rounded-2xl shadow-lg animate-pulse">
-                      ⭐ FEATURED
-                    </div>
-                  )}
-                </div>
-
-                <p class="text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed font-light">
-                  {app.data.description}
-                </p>
-
-                <!-- 状态和分类标签 - 现代胶囊设计 -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-4 mb-8">
-                  <div class={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${statusConfig[app.data.status].color} text-white font-bold rounded-2xl shadow-lg ${statusConfig[app.data.status].pulse}`}>
-                    {statusConfig[app.data.status].label}
-                  </div>
-                  <div class={`inline-flex items-center px-6 py-3 bg-gradient-to-r ${categoryConfig[app.data.category].color} text-white font-semibold rounded-2xl shadow-lg`}>
-                    <span class="mr-2 text-lg">{categoryConfig[app.data.category].icon}</span>
-                    {categoryConfig[app.data.category].label}
-                  </div>
-                  <div class="inline-flex items-center px-6 py-3 bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl text-gray-700 font-medium">
-                    📅 {app.data.publishDate.toLocaleDateString('zh-CN')}
-                  </div>
-                </div>
-
-                <!-- CTA按钮组 - 现代玻璃态 -->
-                <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                  {app.data.github && (
-                    <a 
-                      href={app.data.github} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-gray-900 to-black text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                    >
-                      <svg class="w-6 h-6 mr-3 group-hover:rotate-12 transition-transform" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
-                      </svg>
-                      查看源码
-                    </a>
-                  )}
-                  {app.data.website && app.data.website !== '' && (
-                    <a 
-                      href={app.data.website} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      class="group inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-2xl shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
-                    >
-                      <span class="mr-3 text-xl group-hover:scale-110 transition-transform">🌐</span>
-                      官方网站
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 技术栈展示 - 现代卡片网格 -->
-        <section class="mb-12">
-          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
-            <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-              🔧 技术栈
-            </h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-              {app.data.tech.map((tech, index) => (
-                <div 
-                  class="group relative overflow-hidden bg-white/20 backdrop-blur-lg border border-white/30 rounded-2xl p-4 text-center hover:bg-white/30 hover:scale-105 transition-all duration-300 shadow-lg"
-                  style={`animation-delay: ${index * 100}ms`}
-                >
-                  <div class="text-sm font-semibold text-gray-800 group-hover:text-gray-900 transition-colors">
-                    {tech}
-                  </div>
-                  <!-- 悬浮发光效果 -->
-                  <div class="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-purple-400/0 to-pink-400/0 group-hover:from-blue-400/10 group-hover:via-purple-400/10 group-hover:to-pink-400/10 rounded-2xl transition-all duration-300"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <!-- 详细内容 - 现代阅读体验 -->
-        <section class="mb-12">
-          <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 md:p-12 shadow-2xl">
-            <div class="prose prose-lg max-w-4xl mx-auto text-gray-800">
-              <Content />
-            </div>
-          </div>
-        </section>
-
-        <!-- 截图展示 - 现代画廊 -->
-        {app.data.screenshots && app.data.screenshots.length > 0 && (
-          <section class="mb-12">
-            <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl p-8 shadow-2xl">
-              <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">
-                📸 应用截图
-              </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {app.data.screenshots.map((screenshot, index) => (
-                  <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:scale-105">
-                    <img 
-                      src={screenshot} 
-                      alt={`${app.data.title} 截图 ${index + 1}`}
-                      class="w-full h-auto object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-      </div>
+  <!-- 导航栏 -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-200/50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <a 
+        href="/" 
+        class="group inline-flex items-center text-gray-600 hover:text-gray-900 transition-colors duration-200"
+      >
+        <svg class="w-5 h-5 mr-2 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        <span class="font-medium text-sm tracking-wide">返回主页</span>
+      </a>
     </div>
+  </nav>
+
+  <!-- 主内容区域 -->
+  <main class="relative">
+    <!-- Hero Section - Magazine Style -->
+    <section class="relative py-20 lg:py-32">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-12 gap-16 items-center">
+          <!-- 应用图标区域 -->
+          <div class="lg:col-span-4">
+            <div class="relative">
+              <!-- 装饰背景 -->
+              <div class="absolute -inset-4 bg-gradient-to-br from-blue-100/50 to-purple-100/50 rounded-3xl transform rotate-1"></div>
+              <div class="absolute -inset-2 bg-white/90 rounded-2xl transform -rotate-1 shadow-lg"></div>
+              
+              <!-- 应用图标 -->
+              <div class="relative bg-white rounded-2xl p-8 shadow-xl">
+                {app.data.icon ? (
+                  <img 
+                    src={app.data.icon} 
+                    alt={`${app.data.title} icon`} 
+                    class="w-full max-w-32 mx-auto rounded-2xl shadow-lg"
+                  />
+                ) : (
+                  <div class={`w-32 h-32 mx-auto bg-gradient-to-br ${categoryConfig[app.data.category].color} rounded-2xl flex items-center justify-center text-white text-4xl font-bold shadow-lg`}>
+                    {app.data.title.charAt(0)}
+                  </div>
+                )}
+                
+                <!-- 浮动标签 -->
+                {app.data.featured && (
+                  <div class="absolute -top-2 -right-2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                    ⭐ Featured
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <!-- 应用信息区域 -->
+          <div class="lg:col-span-8">
+            <!-- 分类标签 -->
+            <div class="inline-flex items-center px-4 py-2 bg-gray-100 rounded-full text-gray-600 text-sm font-medium mb-6">
+              <span class="mr-2">{categoryConfig[app.data.category].icon}</span>
+              {categoryConfig[app.data.category].label}
+            </div>
+
+            <!-- 标题 -->
+            <h1 class="text-5xl lg:text-7xl font-black text-gray-900 leading-[0.9] mb-6 tracking-tight">
+              {app.data.title}
+            </h1>
+
+            <!-- 描述 -->
+            <p class="text-xl lg:text-2xl text-gray-600 leading-relaxed mb-8 max-w-3xl">
+              {app.data.description}
+            </p>
+
+            <!-- 状态和元数据 -->
+            <div class="flex flex-wrap items-center gap-4 mb-8">
+              <div class={`inline-flex items-center px-4 py-2 bg-gradient-to-r ${statusConfig[app.data.status].color} text-white text-sm font-semibold rounded-full shadow-sm`}>
+                <span class="mr-2">{statusConfig[app.data.status].icon}</span>
+                {statusConfig[app.data.status].label}
+              </div>
+              <div class="text-gray-500 text-sm">
+                发布于 {app.data.publishDate.toLocaleDateString('zh-CN')}
+              </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="flex flex-wrap gap-4">
+              {app.data.github && (
+                <a 
+                  href={app.data.github} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="group inline-flex items-center px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 transition-colors duration-200 shadow-lg hover:shadow-xl"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 0C4.477 0 0 4.484 0 10.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0110 4.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0020 10.017C20 4.484 15.522 0 10 0z" clip-rule="evenodd"></path>
+                  </svg>
+                  查看源码
+                </a>
+              )}
+              {app.data.website && app.data.website !== '' && (
+                <a 
+                  href={app.data.website} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="group inline-flex items-center px-6 py-3 bg-white border border-gray-300 text-gray-700 font-semibold rounded-xl hover:bg-gray-50 transition-colors duration-200 shadow-sm hover:shadow-md"
+                >
+                  <span class="mr-2">🌐</span>
+                  官方网站
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 技术栈 - Card Grid -->
+    <section class="py-16 bg-gray-50/80">
+      <div class="max-w-7xl mx-auto px-6">
+        <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">技术栈</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+          {app.data.tech.map((tech, index) => (
+            <div 
+              class="group relative bg-white rounded-xl p-4 text-center shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 hover:border-gray-200"
+              style={`animation-delay: ${index * 50}ms`}
+            >
+              <div class="text-sm font-semibold text-gray-700 group-hover:text-gray-900 transition-colors">
+                {tech}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 详细内容 - Magazine Layout -->
+    <section class="py-20">
+      <div class="max-w-4xl mx-auto px-6">
+        <article class="prose prose-lg prose-gray max-w-none">
+          <Content />
+        </article>
+      </div>
+    </section>
+
+    <!-- 截图展示 -->
+    {app.data.screenshots && app.data.screenshots.length > 0 && (
+      <section class="py-16 bg-gray-50/80">
+        <div class="max-w-7xl mx-auto px-6">
+          <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">应用截图</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {app.data.screenshots.map((screenshot, index) => (
+              <div class="group relative overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-500">
+                <img 
+                  src={screenshot} 
+                  alt={`${app.data.title} 截图 ${index + 1}`}
+                  class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
   </main>
 </Layout>
 
 <style>
-  /* 动画定义 */
-  @keyframes blob {
-    0% { transform: translate(0px, 0px) scale(1); }
-    33% { transform: translate(30px, -50px) scale(1.1); }
-    66% { transform: translate(-20px, 20px) scale(0.9); }
-    100% { transform: translate(0px, 0px) scale(1); }
+  /* 自定义动画 */
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(30px, -30px) rotate(1deg); }
+    66% { transform: translate(-20px, 20px) rotate(-1deg); }
   }
 
-  .animate-blob {
-    animation: blob 7s infinite;
+  @keyframes float-delayed {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(-30px, 30px) rotate(-1deg); }
+    66% { transform: translate(20px, -20px) rotate(1deg); }
   }
 
-  .animation-delay-2000 {
+  @keyframes float-slow {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(20px, -20px) scale(1.05); }
+  }
+
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float-delayed 10s ease-in-out infinite;
     animation-delay: 2s;
   }
 
-  .animation-delay-4000 {
+  .animate-float-slow {
+    animation: float-slow 12s ease-in-out infinite;
     animation-delay: 4s;
   }
 
-  /* 现代化 prose 样式 - 极致舒适的阅读体验 */
-  .prose h1,
-  .prose h1[data-astro-cid-7da3lww3] {
-    font-size: 2.25rem !important;
-    line-height: 1.2 !important;
-    font-weight: 900 !important;
-    background: linear-gradient(to right, #111827, #1e40af, #111827) !important;
-    background-clip: text !important;
-    -webkit-background-clip: text !important;
-    color: transparent !important;
-    margin-top: 0 !important;
-    margin-bottom: 3rem !important;
-    padding-bottom: 1.5rem !important;
-    border-bottom: 3px solid #e5e7eb !important;
-    position: relative !important;
+  /* 现代化 prose 样式 - 受到 Notion 和 Medium 启发 */
+  .prose {
+    @apply text-gray-800 leading-relaxed;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1;
   }
 
-  .prose h1::after,
-  .prose h1[data-astro-cid-7da3lww3]::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -3px !important;
-    left: 0 !important;
-    width: 60px !important;
-    height: 3px !important;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
-    border-radius: 2px !important;
-  }
-  
-  .prose h2,
-  .prose h2[data-astro-cid-7da3lww3] {
-    font-size: 1.875rem !important;
-    line-height: 1.3 !important;
-    font-weight: 700 !important;
-    color: #111827 !important;
-    position: relative !important;
-    margin-top: 5rem !important;
-    margin-bottom: 2.5rem !important;
-    padding-bottom: 1rem !important;
-    border-bottom: 2px solid #f3f4f6 !important;
-  }
-  
-  .prose h2::before,
-  .prose h2[data-astro-cid-7da3lww3]::before {
-    content: '' !important;
-    position: absolute !important;
-    left: -1.5rem !important;
-    top: 50% !important;
-    width: 0.75rem !important;
-    height: 2.5rem !important;
-    background: linear-gradient(to bottom, #3b82f6, #9333ea) !important;
-    border-radius: 9999px !important;
-    transform: translateY(-50%) !important;
+  .prose h1 {
+    @apply text-4xl font-black text-gray-900 leading-tight mb-8 mt-12;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1;
+    letter-spacing: -0.025em;
   }
 
-  .prose h2::after,
-  .prose h2[data-astro-cid-7da3lww3]::after {
-    content: '' !important;
-    position: absolute !important;
-    bottom: -2px !important;
-    left: 0 !important;
-    width: 40px !important;
-    height: 2px !important;
-    background: linear-gradient(90deg, #3b82f6, #8b5cf6) !important;
-    border-radius: 1px !important;
-  }
-  
-  .prose h3,
-  .prose h3[data-astro-cid-7da3lww3] {
-    font-size: 1.5rem !important;
-    line-height: 1.4 !important;
-    font-weight: 700 !important;
-    color: #1f2937 !important;
-    position: relative !important;
-    margin-top: 3rem !important;
-    margin-bottom: 1.8rem !important;
-    padding-left: 1rem !important;
+  .prose h1:first-child {
+    @apply mt-0;
   }
 
-  .prose h3::before,
-  .prose h3[data-astro-cid-7da3lww3]::before {
-    content: '' !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 50% !important;
-    width: 4px !important;
-    height: 24px !important;
-    background: linear-gradient(180deg, #60a5fa, #c084fc) !important;
-    border-radius: 2px !important;
-    transform: translateY(-50%) !important;
+  .prose h2 {
+    @apply text-3xl font-bold text-gray-900 leading-snug mb-6 mt-12;
+    letter-spacing: -0.02em;
+    position: relative;
   }
-  
+
+  .prose h2::before {
+    content: '';
+    @apply absolute -left-6 top-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full;
+    transform: translateY(-50%);
+  }
+
+  .prose h3 {
+    @apply text-2xl font-semibold text-gray-800 leading-snug mb-4 mt-8;
+    letter-spacing: -0.015em;
+  }
+
   .prose p {
-    @apply text-gray-700 text-lg;
-    line-height: 1.9;
-    margin-bottom: 2rem;
+    @apply text-lg text-gray-700 leading-8 mb-6;
     text-align: justify;
     text-justify: inter-character;
-    letter-spacing: 0.02em;
   }
 
   .prose p:first-of-type {
-    font-size: 1.2rem;
-    color: #374151;
-    font-weight: 500;
-    margin-bottom: 2.5rem;
-  }
-  
-  .prose p + p {
-    margin-top: 1.5rem;
+    @apply text-xl text-gray-800 font-medium leading-8;
   }
 
-  /* 特别处理粗体段落 */
-  .prose p strong:only-child {
-    display: block;
-    font-size: 1.1rem;
-    color: #1f2937;
-    margin-bottom: 0.5rem;
+  .prose strong {
+    @apply font-semibold text-gray-900;
   }
-  
+
   .prose ul {
-    margin-top: 2rem;
-    margin-bottom: 2.5rem;
-    padding-left: 0;
-  }
-  
-  .prose li {
-    @apply text-gray-700 relative text-lg;
-    line-height: 1.8;
-    margin-bottom: 1.2rem;
-    padding-left: 2rem;
-    padding-top: 0.2rem;
-    padding-bottom: 0.2rem;
-  }
-  
-  .prose li::before {
-    content: '▶';
-    @apply absolute left-0 text-blue-500 font-bold;
-    top: 0.3rem;
-    font-size: 0.9rem;
+    @apply my-8 space-y-3;
   }
 
-  /* 有序列表样式 */
+  .prose li {
+    @apply text-lg text-gray-700 leading-7 relative pl-6;
+  }
+
+  .prose li::before {
+    content: '•';
+    @apply absolute left-0 text-blue-500 font-bold text-xl;
+    top: -2px;
+  }
+
   .prose ol {
-    margin-top: 2rem;
-    margin-bottom: 2.5rem;
-    padding-left: 0;
+    @apply my-8 space-y-3;
     counter-reset: list-counter;
   }
 
   .prose ol li {
+    @apply relative pl-8;
     counter-increment: list-counter;
-    padding-left: 2.5rem;
   }
 
   .prose ol li::before {
     content: counter(list-counter);
     @apply absolute left-0 top-0 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold rounded-full flex items-center justify-center;
   }
-  
-  .prose strong {
-    @apply font-semibold bg-gradient-to-r from-blue-700 to-purple-700 bg-clip-text text-transparent;
-    letter-spacing: 0.01em;
-  }
-  
+
   .prose code {
-    @apply bg-gradient-to-r from-blue-50 to-purple-50 px-3 py-1.5 rounded-lg text-sm font-mono border border-blue-200;
-    color: #4338ca;
-    font-weight: 500;
+    @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
   }
 
-  /* 内容区块样式 */
-  .prose > * + h1 {
-    margin-top: 6rem;
+  .prose pre {
+    @apply bg-gray-900 text-gray-100 p-6 rounded-xl overflow-x-auto my-8;
   }
 
-  .prose > * + h2 {
-    margin-top: 5rem;
+  .prose pre code {
+    @apply bg-transparent p-0 text-inherit;
   }
 
-  .prose > * + h3 {
-    margin-top: 3rem;
-  }
-
-  .prose h1 + p,
-  .prose h1 + ul {
-    margin-top: 2rem;
-  }
-
-  .prose h2 + p,
-  .prose h2 + ul,
-  .prose h2 + h3 {
-    margin-top: 1.8rem;
-  }
-
-  .prose h3 + p,
-  .prose h3 + ul {
-    margin-top: 1.2rem;
-  }
-
-  /* 嵌套列表 */
-  .prose ul ul,
-  .prose ol ul,
-  .prose ul ol,
-  .prose ol ol {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    padding-left: 2rem;
-  }
-
-  .prose ul ul li::before {
-    content: '→';
-    @apply text-gray-400;
-    font-size: 0.8rem;
-  }
-
-  /* 引用块样式 */
   .prose blockquote {
-    @apply border-l-4 border-blue-400 bg-gradient-to-r from-blue-50 to-purple-50 pl-8 pr-6 py-6 my-8 rounded-r-xl;
+    @apply border-l-4 border-blue-400 bg-blue-50 pl-6 pr-6 py-4 my-8 rounded-r-lg;
     font-style: italic;
-    position: relative;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   }
 
-  .prose blockquote::before {
-    content: '"';
-    font-size: 4rem;
-    color: #93c5fd;
-    position: absolute;
-    top: -0.5rem;
-    left: 1rem;
-    font-family: serif;
-    line-height: 1;
+  .prose blockquote p {
+    @apply text-blue-900 mb-0;
   }
 
-  /* 分隔线样式 */
-  .prose hr {
-    margin: 4rem 0;
-    border: none;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #e5e7eb, transparent);
+  .prose a {
+    @apply text-blue-600 hover:text-blue-800 underline transition-colors;
   }
 
-  /* 段落间的额外呼吸空间 */
-  .prose > section,
-  .prose > div {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
-  }
-
-  /* 表格样式优化 */
   .prose table {
-    @apply w-full border-collapse my-8;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    @apply w-full border-collapse my-8 bg-white rounded-lg overflow-hidden shadow-sm;
   }
 
   .prose th {
-    @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-4 text-left font-semibold;
+    @apply bg-gray-50 px-6 py-4 text-left font-semibold text-gray-900 border-b border-gray-200;
   }
 
   .prose td {
-    @apply px-6 py-4 border-b border-gray-200;
+    @apply px-6 py-4 border-b border-gray-100;
   }
 
   .prose tr:hover td {
-    @apply bg-blue-50;
+    @apply bg-gray-50;
   }
 
-  /* 玻璃态效果增强 */
-  .backdrop-blur-xl {
-    backdrop-filter: blur(20px);
+  /* 段落间距优化 */
+  .prose > * + * {
+    margin-top: 1.5rem;
   }
 
-  /* 悬浮动画 */
-  .hover\:scale-105:hover {
-    transform: scale(1.05);
+  .prose h1 + * {
+    margin-top: 2rem;
   }
 
-  .hover\:scale-110:hover {
-    transform: scale(1.1);
+  .prose h2 + * {
+    margin-top: 1.5rem;
+  }
+
+  .prose h3 + * {
+    margin-top: 1rem;
+  }
+
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .prose h1 {
+      @apply text-3xl;
+    }
+    
+    .prose h2 {
+      @apply text-2xl;
+    }
+    
+    .prose p {
+      @apply text-base leading-7;
+    }
+    
+    .prose li {
+      @apply text-base;
+    }
   }
 </style>
