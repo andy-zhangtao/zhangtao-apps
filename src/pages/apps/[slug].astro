@@ -129,12 +129,31 @@ const statusConfig = {
                 {statusConfig[app.data.status].label}
               </div>
               <div class="text-gray-500 text-sm">
-                发布于 {app.data.publishDate.toLocaleDateString('zh-CN')}
+                最后更新于 {app.data.lastUpdated.toLocaleDateString('zh-CN')}
               </div>
+              {app.data.releaseVersion && (
+                <div class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 text-xs font-medium rounded-full">
+                  <span class="mr-1">🏷️</span>
+                  {app.data.releaseVersion}
+                </div>
+              )}
             </div>
 
             <!-- 操作按钮 -->
             <div class="flex flex-wrap gap-4">
+              {app.data.downloadUrl && (
+                <a 
+                  href={app.data.downloadUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                >
+                  <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                  </svg>
+                  下载最新版本
+                </a>
+              )}
               {app.data.github && (
                 <a 
                   href={app.data.github} 
@@ -184,8 +203,39 @@ const statusConfig = {
       </div>
     </section>
 
+    <!-- 核心特性展示 - Card Grid -->
+    {app.data.features && app.data.features.length > 0 && (
+      <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+          <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">核心特性</h2>
+            <p class="text-xl text-gray-600">让我们看看这个应用的亮点功能</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {app.data.features.map((feature, index) => (
+              <div class="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 hover:border-gray-200 transform hover:-translate-y-2">
+                <!-- 图标背景 -->
+                <div class="absolute top-6 right-6 w-16 h-16 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <span class="text-2xl">{feature.icon}</span>
+                </div>
+                
+                <!-- 特性内容 -->
+                <div class="relative z-10">
+                  <h3 class="text-xl font-bold text-gray-900 mb-3 pr-20">{feature.title}</h3>
+                  <p class="text-gray-600 leading-relaxed">{feature.description}</p>
+                </div>
+                
+                <!-- 装饰元素 -->
+                <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-b-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- 详细内容 - Magazine Layout -->
-    <section class="py-20">
+    <section class="py-20 bg-gray-50/50">
       <div class="max-w-4xl mx-auto px-6">
         <article class="prose prose-lg prose-gray max-w-none">
           <Content />
