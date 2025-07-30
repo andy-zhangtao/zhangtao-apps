@@ -148,6 +148,13 @@ declare module 'astro:content' {
   collection: "apps";
   data: InferEntrySchema<"apps">
 } & { render(): Render[".md"] };
+"janitor.md": {
+	id: "janitor.md";
+  slug: "janitor";
+  body: string;
+  collection: "apps";
+  data: InferEntrySchema<"apps">
+} & { render(): Render[".md"] };
 "jsonify.md": {
 	id: "jsonify.md";
   slug: "jsonify";
