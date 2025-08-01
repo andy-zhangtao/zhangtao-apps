@@ -1,0 +1,26 @@
+---
+// ListItem 组件，自动处理有序和无序列表项的样式
+---
+
+<li class="text-lg text-gray-700 leading-7 relative pl-6 [counter-increment:list-counter]">
+  <slot />
+</li>
+
+<style>
+  /* 无序列表项目符号 */
+  li:not(:where(ol li))::before {
+    content: '•';
+    @apply absolute left-0 text-blue-500 font-bold text-xl top-[-2px];
+  }
+
+  /* 有序列表项目符号 */
+  ol li::before {
+    content: counter(list-counter);
+    @apply absolute left-0 top-0 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold rounded-full flex items-center justify-center;
+    left: -8px;
+  }
+
+  ol li {
+    @apply pl-8;
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  level: number;
+  id?: string;
+}
+
+const { level, id } = Astro.props;
+const Tag = `h${level}` as keyof HTMLElementTagNameMap;
+
+const levelStyles = {
+  1: 'text-4xl font-black text-gray-900 leading-tight mb-8 mt-12',
+  2: 'text-3xl font-bold text-gray-900 leading-snug mb-6 mt-12 relative',
+  3: 'text-2xl font-semibold text-gray-800 leading-snug mb-4 mt-8',
+  4: 'text-xl font-semibold text-gray-800 leading-snug mb-3 mt-6',
+  5: 'text-lg font-semibold text-gray-800 leading-snug mb-2 mt-4',
+  6: 'text-base font-semibold text-gray-800 leading-snug mb-2 mt-4'
+};
+
+const style = levelStyles[level as keyof typeof levelStyles] || levelStyles[1];
+---
+
+<Tag class={style} id={id}>
+  <slot />
+  {level === 2 && (
+    <div class="absolute -left-6 top-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full transform -translate-y-1/2"></div>
+  )}
+</Tag>

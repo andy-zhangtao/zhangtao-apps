@@ -1,0 +1,189 @@
+---
+import Markdoc from '@markdoc/markdoc';
+import config from '../lib/markdoc.config';
+import Callout from './markdoc/Callout.astro';
+import Badge from './markdoc/Badge.astro';
+import Highlight from './markdoc/Highlight.astro';
+
+interface Props {
+  content: string;
+}
+
+const { content } = Astro.props;
+
+// 解析和转换 Markdoc 内容
+const ast = Markdoc.parse(content);
+const transformed = Markdoc.transform(ast, config);
+
+// 使用 Markdoc 的 React 渲染器适配为 HTML
+const html = Markdoc.renderers.html(transformed, {
+  components: {
+    callout: (props: any) => {
+      const { type = 'info', title, children } = props;
+      const typeConfig = {
+        info: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'ℹ️', titleColor: 'text-blue-900', contentColor: 'text-blue-800' },
+        warning: { bg: 'bg-amber-50', border: 'border-amber-200', icon: '⚠️', titleColor: 'text-amber-900', contentColor: 'text-amber-800' },
+        error: { bg: 'bg-red-50', border: 'border-red-200', icon: '❌', titleColor: 'text-red-900', contentColor: 'text-red-800' },
+        success: { bg: 'bg-green-50', border: 'border-green-200', icon: '✅', titleColor: 'text-green-900', contentColor: 'text-green-800' }
+      };
+      const styles = typeConfig[type as keyof typeof typeConfig] || typeConfig.info;
+      return `<div class="${styles.bg} ${styles.border} border rounded-xl p-6 my-6">
+        <div class="flex items-start space-x-4">
+          <div class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-sm">
+            ${styles.icon}
+          </div>
+          <div class="flex-1 min-w-0">
+            ${title ? `<h4 class="${styles.titleColor} font-semibold text-lg mb-2">${title}</h4>` : ''}
+            <div class="${styles.contentColor}">${children}</div>
+          </div>
+        </div>
+      </div>`;
+    },
+    badge: (props: any) => {
+      const { variant = 'default', children } = props;
+      const variantConfig = {
+        default: 'bg-gray-100 text-gray-800 border-gray-200',
+        success: 'bg-green-100 text-green-800 border-green-200',
+        warning: 'bg-amber-100 text-amber-800 border-amber-200',
+        error: 'bg-red-100 text-red-800 border-red-200'
+      };
+      const classes = variantConfig[variant as keyof typeof variantConfig] || variantConfig.default;
+      return `<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${classes}">${children}</span>`;
+    },
+    highlight: (props: any) => {
+      const { color = 'blue', children } = props;
+      const colorConfig = {
+        blue: 'bg-blue-100 text-blue-900',
+        green: 'bg-green-100 text-green-900',
+        yellow: 'bg-yellow-100 text-yellow-900',
+        red: 'bg-red-100 text-red-900',
+        purple: 'bg-purple-100 text-purple-900',
+        pink: 'bg-pink-100 text-pink-900'
+      };
+      const bgClass = colorConfig[color as keyof typeof colorConfig] || colorConfig.blue;
+      return `<mark class="${bgClass} px-2 py-1 rounded-md font-medium">${children}</mark>`;
+    }
+  }
+});
+---
+
+<!-- 渲染 HTML 内容 -->
+<div class="markdoc-content">
+  <Fragment set:html={html} />
+</div>
+
+<style>
+  /* Markdoc 内容样式 */
+  .markdoc-content :global(h1) {
+    @apply text-4xl font-black text-gray-900 leading-tight mb-8 mt-12;
+    font-feature-settings: "kern" 1, "liga" 1, "clig" 1, "calt" 1;
+    letter-spacing: -0.025em;
+  }
+
+  .markdoc-content :global(h1:first-child) {
+    @apply mt-0;
+  }
+
+  .markdoc-content :global(h2) {
+    @apply text-3xl font-bold text-gray-900 leading-snug mb-6 mt-12 relative;
+    letter-spacing: -0.02em;
+  }
+
+  .markdoc-content :global(h2::before) {
+    content: '';
+    @apply absolute -left-6 top-1/2 w-1 h-8 bg-gradient-to-b from-blue-500 to-purple-600 rounded-full;
+    transform: translateY(-50%);
+  }
+
+  .markdoc-content :global(h3) {
+    @apply text-2xl font-semibold text-gray-800 leading-snug mb-4 mt-8;
+    letter-spacing: -0.015em;
+  }
+
+  .markdoc-content :global(p) {
+    @apply text-lg text-gray-700 leading-8 mb-6;
+    text-align: justify;
+    text-justify: inter-character;
+  }
+
+  .markdoc-content :global(p:first-of-type) {
+    @apply text-xl text-gray-800 font-medium leading-8;
+  }
+
+  .markdoc-content :global(strong) {
+    @apply font-semibold text-gray-900;
+  }
+
+  .markdoc-content :global(ul) {
+    @apply my-8 space-y-3;
+  }
+
+  .markdoc-content :global(li) {
+    @apply text-lg text-gray-700 leading-7 relative pl-6;
+  }
+
+  .markdoc-content :global(ul li::before) {
+    content: '•';
+    @apply absolute left-0 text-blue-500 font-bold text-xl;
+    top: -2px;
+  }
+
+  .markdoc-content :global(ol) {
+    @apply my-8 space-y-3;
+    counter-reset: list-counter;
+  }
+
+  .markdoc-content :global(ol li) {
+    @apply relative pl-8;
+    counter-increment: list-counter;
+  }
+
+  .markdoc-content :global(ol li::before) {
+    content: counter(list-counter);
+    @apply absolute left-0 top-0 w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold rounded-full flex items-center justify-center;
+  }
+
+  .markdoc-content :global(code) {
+    @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
+  }
+
+  .markdoc-content :global(pre) {
+    @apply bg-gray-900 text-gray-100 p-6 rounded-xl overflow-x-auto my-8;
+  }
+
+  .markdoc-content :global(pre code) {
+    @apply bg-transparent p-0 text-inherit;
+  }
+
+  .markdoc-content :global(blockquote) {
+    @apply border-l-4 border-blue-400 bg-blue-50 pl-6 pr-6 py-4 my-8 rounded-r-lg;
+    font-style: italic;
+  }
+
+  .markdoc-content :global(blockquote p) {
+    @apply text-blue-900 mb-0;
+  }
+
+  .markdoc-content :global(a) {
+    @apply text-blue-600 hover:text-blue-800 underline transition-colors;
+  }
+
+  /* 响应式调整 */
+  @media (max-width: 768px) {
+    .markdoc-content :global(h1) {
+      @apply text-3xl;
+    }
+    
+    .markdoc-content :global(h2) {
+      @apply text-2xl;
+    }
+    
+    .markdoc-content :global(p) {
+      @apply text-base leading-7;
+    }
+    
+    .markdoc-content :global(li) {
+      @apply text-base;
+    }
+  }
+</style>

@@ -1,0 +1,12 @@
+---
+interface Props {
+  ordered?: boolean;
+}
+
+const { ordered = false } = Astro.props;
+const Tag = ordered ? 'ol' : 'ul';
+---
+
+<Tag class={`my-8 space-y-3 ${ordered ? 'list-none' : ''}`} style={ordered ? 'counter-reset: list-counter' : ''}>
+  <slot />
+</Tag>

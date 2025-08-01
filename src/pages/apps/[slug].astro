@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Layout from '../../components/Layout.astro';
+import MarkdocRenderer from '../../components/MarkdocRenderer.astro';
 
 export async function getStaticPaths() {
   const apps = await getCollection('apps');
@@ -16,7 +17,8 @@ if (!app) {
   return Astro.redirect('/404');
 }
 
-const { Content } = await app.render();
+// 获取原始 markdown 内容用于 Markdoc 渲染
+const { body: markdownContent } = app;
 
 const categoryConfig = {
   mobile: { label: '移动应用', color: 'from-emerald-500 via-teal-500 to-cyan-500', icon: '📱', accent: 'emerald' },
@@ -238,7 +240,7 @@ const statusConfig = {
     <section class="py-20 bg-gray-50/50">
       <div class="max-w-4xl mx-auto px-6">
         <article class="prose prose-lg prose-gray max-w-none">
-          <Content />
+          <MarkdocRenderer content={markdownContent} />
         </article>
       </div>
     </section>

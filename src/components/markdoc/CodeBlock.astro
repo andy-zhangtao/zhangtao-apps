@@ -1,0 +1,25 @@
+---
+interface Props {
+  language?: string;
+  content?: string;
+}
+
+const { language, content } = Astro.props;
+---
+
+{content ? (
+  <!-- 代码块 -->
+  <div class="relative my-8">
+    {language && (
+      <div class="absolute top-0 left-4 -translate-y-1/2 bg-gray-800 text-gray-300 px-3 py-1 rounded-full text-xs font-mono">
+        {language}
+      </div>
+    )}
+    <pre class="bg-gray-900 text-gray-100 p-6 rounded-xl overflow-x-auto"><code set:html={content} /></pre>
+  </div>
+) : (
+  <!-- 内联代码 -->
+  <code class="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800">
+    <slot />
+  </code>
+)}
