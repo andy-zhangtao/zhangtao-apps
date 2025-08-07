@@ -162,6 +162,13 @@ declare module 'astro:content' {
   collection: "apps";
   data: InferEntrySchema<"apps">
 } & { render(): Render[".md"] };
+"quickcap.md": {
+	id: "quickcap.md";
+  slug: "quickcap";
+  body: string;
+  collection: "apps";
+  data: InferEntrySchema<"apps">
+} & { render(): Render[".md"] };
 };
 
 	};
